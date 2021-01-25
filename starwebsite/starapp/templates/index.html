@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Star Finder</title>
+</head>
+<body>
+    <div class="all-content">
+        <div class="header">
+            <h1>Which celebrity looks like you the most?</h1>
+        </div>
+    
+        <div class="content">
+            <div class="historic">
+                <!-- {{ historic|length }} -->
+                {% for match in historic %}
+                <div class="match">
+                    <a class="match-link" href="/{{ match.id }}"></a>
+                    <div class="name">
+                        star_name{{ match.id }}
+                        <!-- {{ match.name }} -->
+                    </div>
+                    <div class="mini-face">
+                        <div>
+                            <img src="{{ match.your_face.face_Img.url }}"/>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                Find your star mate ! An historic will be displayed here
+                {% endfor %}
+            </div>
+
+            <div class="main">
+                <div class="main-content">
+                    <div></div>
+                    <div id="your-face" class="face">
+                        {% if form %}
+                        <div class="before-result">
+                            <button name="take-photo">Take a selfie</button>
+                            <div class="or">Or</div>
+                            <form method = "post" enctype="multipart/form-data"> 
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit">Upload</button> 
+                            </form>
+                            <!-- <button name="import-photo">Importez une photo</button> -->
+                        </div>
+                        {% endif %}
+
+                        {% if save and save.your_face %}
+                        <div class="result">
+                            <img src="{{ save.your_face.face_Img.url }}"/>
+                        </div> 
+                        <div class="reset-button">
+                            <a href="/reset">
+                                <img src="{% static 'delete.png' %}"/>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="plus">
+                        +
+                    </div>
+                    
+                    <div id="star-face" class="face">
+                        {% if form or save and not save.star_face %}
+                        <div class="before-result">
+                            <div class="container">
+                                <div class="loader">
+                                    <div class="loading-icon {% if save and save.your_face %} star-loading {% endif %}">
+                                        <img src="{% static 'star.png' %}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="result">
+                            <img src="{{ save.star_face.face_Img.url }}"/>
+                        </div>
+                        {% endif %}
+                    </div>
+                        
+                    <div class="equals">
+                        =
+                    </div>
+
+                    <div id="merge-face" class="face">
+                        {% if form or save and not save.merge_face %}
+                        <div class="before-result">
+                            <div class="container">
+                                <div class="loader">
+                                    <div class="loading-icon {% if save and save.star_face %} hat-loading {% endif %}">
+                                        <img src="{% static 'hat.png' %}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="result">
+                            <img src="{{ save.merge_face.face_Img.url }}"/>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <h4>Pfe 2021</h1>
+        </div>
+    </div>
+</body>
+</html>
