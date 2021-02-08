@@ -217,6 +217,13 @@ img {
   cursor: pointer;
 }
 
+.star-name {
+  position: relative;
+  top: 20px;
+  font-size: 25px;
+  justify-content: center;
+}
+
 
 /* animations */
 

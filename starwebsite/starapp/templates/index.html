@@ -48,14 +48,13 @@
                                 {{ form.as_p }}
                                 <button type="submit">Upload</button> 
                             </form>
-                            <!-- <button name="import-photo">Importez une photo</button> -->
                         </div>
                         {% endif %}
 
                         {% if save and save.your_face %}
                         <div class="result">
                             <img src="{{ save.your_face.face_Img.url }}"/>
-                        </div> 
+                        </div>
                         <div class="reset-button">
                             <a href="/reset">
                                 <img src="{% static 'delete.png' %}"/>
@@ -86,9 +85,14 @@
                         <div class="result">
                             <img src="{{ save.star_face.face_Img.url }}"/>
                         </div>
+                        <div class="star-name">
+                            <div>
+                            {{ save.star_name }} !
+                            </div>
+                        </div>
                         {% endif %}
                     </div>
-                        
+
                     <div class="equals">
                         =
                     </div>

@@ -8,7 +8,7 @@ import os
 
 def merge_star(request):
     current_save = saveById(request)
-    if (not current_save):
+    if (not current_save or not current_save.star_face or current_save.merge_face):
         return index(request)
 
     path = os.path.abspath(starapp.__path__[0]).replace('\\starapp','')
@@ -19,11 +19,11 @@ def merge_star(request):
     # appeller fonction lente
     print('mergeStar called')
     face = Face()
-    # face.face_Img = findStar()
+    # face.face_Img = mergeStar()
     face.face_Img = 'cat_hokusai_tCakvVH.png' # supprimer et remplacer par la ligne du dessus
     time.sleep(5) # supprimer
     face.save()
-    print('findStar returned')
+    print('mergeStar returned')
 
     current_save.merge_face = face
     current_save.save()
@@ -32,7 +32,7 @@ def merge_star(request):
 
 def find_star(request):
     current_save = saveById(request)
-    if (not current_save):
+    if (not current_save or current_save.star_face):
         return index(request)
 
     path = os.path.abspath(starapp.__path__[0]).replace('\\starapp','')
@@ -43,13 +43,14 @@ def find_star(request):
     # appeller fonction lente
     print('findStar called')
     face = Face()
-    # face.face_Img = findStar()
-    face.face_Img = 'cat_hokusai_tCakvVH.png' # supprimer et remplacer par la ligne du dessus
+    # face.face_Img, star_name = findStar()
+    face.face_Img, star_name = 'cat_hokusai_tCakvVH.png', 'Jim Carrey' # supprimer et remplacer par la ligne du dessus
     time.sleep(5) # supprimer
     face.save()
     print('findStar returned')
 
     current_save.star_face = face
+    current_save.star_name = star_name
     current_save.save()
     return index(request, current_save.id)
 

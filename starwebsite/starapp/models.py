@@ -13,4 +13,4 @@ class Save(models.Model):
     your_face = models.ForeignKey(Face, related_name= "your", on_delete=models.CASCADE, null=True, blank=True)
     star_face = models.ForeignKey(Face, related_name= "star", on_delete=models.CASCADE, null=True, blank=True)
     merge_face = models.ForeignKey(Face, related_name= "merge", on_delete=models.CASCADE, null=True, blank=True)
-    star_name = ''
+    star_name = models.TextField(default='Nobody')
