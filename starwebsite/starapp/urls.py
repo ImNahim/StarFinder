@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('<int:save_id>', views.index, name='save'),
+    path('find-star', views.find_star, name='find'),
     path('reset', views.index_reset, name='reset'),
 ]
 

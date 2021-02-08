@@ -75,6 +75,9 @@
                                 <div class="loader">
                                     <div class="loading-icon {% if save and save.your_face %} star-loading {% endif %}">
                                         <img src="{% static 'star.png' %}"/>
+                                        {% if save and save.your_face %}
+                                        <meta http-equiv="refresh" content="0; url=/find-star" />
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
