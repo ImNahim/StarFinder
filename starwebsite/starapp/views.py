@@ -1,12 +1,7 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render
 from .forms import *
 
-import os;
-from django.core.files.storage import default_storage
-from django.db.models import FileField
 
-from .models import Book
 
 def index_reset(request):
     request.session['current_save'] = None
@@ -64,10 +59,3 @@ def index(request, save_id=None):
 
     context['form'] = FaceForm()
     return render(request, 'index.html', context)
-
-
-
-def book_by_id(request, book_id):
-    book = Book.objects.get(pk=book_id)
-    # return HttpResponse(f"Book: {book.title}, published on {book.pub_date}")
-    return render(request, 'book_details.html', {'book':book})

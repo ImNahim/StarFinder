@@ -7,7 +7,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('<int:save_id>', views.index, name='save'),
     path('reset', views.index_reset, name='reset'),
-    path('book/<int:book_id>', views.book_by_id, name='book_by_id'),
 ]
 
 if settings.DEBUG:
