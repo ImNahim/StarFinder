@@ -5,6 +5,31 @@ import starapp
 import time
 import os
 
+
+def merge_star(request):
+    current_save = saveById(request)
+    if (not current_save):
+        return index(request)
+
+    path = os.path.abspath(starapp.__path__[0]).replace('\\starapp','')
+    img_url = current_save.star_face.face_Img.url.replace('/','\\')
+    abs_path = path + img_url
+    print(abs_path)
+
+    # appeller fonction lente
+    print('mergeStar called')
+    face = Face()
+    # face.face_Img = findStar()
+    face.face_Img = 'cat_hokusai_tCakvVH.png' # supprimer et remplacer par la ligne du dessus
+    time.sleep(5) # supprimer
+    face.save()
+    print('findStar returned')
+
+    current_save.merge_face = face
+    current_save.save()
+    return index(request, current_save.id)
+
+
 def find_star(request):
     current_save = saveById(request)
     if (not current_save):
@@ -77,6 +102,10 @@ def index(request, save_id=None):
         if current_save:
             context['save'] = current_save
             if current_save.your_face:
+                # if not current_save.star_face:
+                #     testFindStar(request, current_save)
+                # elif not current_save.merge_face:
+                #     testMergeStar(request, context)
                 return render(request, 'index.html', context)
 
     context['form'] = FaceForm()

@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('<int:save_id>', views.index, name='save'),
     path('find-star', views.find_star, name='find'),
+    path('merge-star', views.merge_star, name='merge'),
     path('reset', views.index_reset, name='reset'),
 ]
 
