@@ -103,10 +103,6 @@ def index(request, save_id=None):
         if current_save:
             context['save'] = current_save
             if current_save.your_face:
-                # if not current_save.star_face:
-                #     testFindStar(request, current_save)
-                # elif not current_save.merge_face:
-                #     testMergeStar(request, context)
                 return render(request, 'index.html', context)
 
     context['form'] = FaceForm()
