@@ -20,12 +20,13 @@ def merge_star(request):
     abs_path = path + img_url
     print(abs_path)
 
-    # appeller fonction lente
     print('mergeStar called')
     face = Face()
+
     # face.face_Img = mergeStar()
-    face.face_Img = 'cat_hokusai_tCakvVH.png' # supprimer et remplacer par la ligne du dessus
+    face.face_Img = 'harrymacrontter.jpg' # supprimer et remplacer par la ligne du dessus
     time.sleep(5) # supprimer
+
     face.save()
     print('mergeStar returned')
 
@@ -44,7 +45,6 @@ def find_star(request):
     abs_path = path + img_url
     print(abs_path)
 
-    # appeller fonction lente
     print('findStar called')
     face = Face()
 
@@ -52,10 +52,7 @@ def find_star(request):
     vect_embedding = Model.predict(image_adapter)[0]
     print(vect_embedding)
 
-    face.face_Img, star_name = main.main(abs_path, vect_embedding, 'test')
-    # face.face_Img, star_name = 'cat_hokusai_tCakvVH.png', 'Jim Carrey' # supprimer et remplacer par la ligne du dessus
-    # time.sleep(5) # supprimer
-
+    face.face_Img, star_name = main.main(abs_path, vect_embedding)
     face.save()
     print('findStar returned')
     print(face.face_Img)

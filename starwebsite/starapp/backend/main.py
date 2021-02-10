@@ -61,10 +61,9 @@ def afficher_celebrite(data_frame, path_image_utilisateur, nom_utilisateur, numb
 
 def celebrity_path_and_name(data_frame):
     instance = data_frame.iloc[0]
-    full_path = instance['file_path']
-    full_path = os.path.join(os.getcwd(), 'starapp','backend', full_path)
+    path = instance['file_path']
     nom_celebrite = instance['name']
-    return full_path, nom_celebrite
+    return path, nom_celebrite
 
 
 def main(path, vect, nom_utilisateur=''):
