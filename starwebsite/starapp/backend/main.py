@@ -59,6 +59,13 @@ def afficher_celebrite(data_frame, path_image_utilisateur, nom_utilisateur, numb
         except FileNotFoundError:
             print("L'image n'existe pas : " + full_path)
 
+def celebrity_path_and_name(data_frame):
+    instance = data_frame.iloc[0]
+    full_path = instance['file_path']
+    full_path = os.path.join(os.getcwd(), 'starapp','backend', full_path)
+    nom_celebrite = instance['name']
+    return full_path, nom_celebrite
+
 
 def main(path, vect, nom_utilisateur=''):
     path_df = os.path.join(os.getcwd(), 'starapp', 'backend','resources/vectorisation/imdb_metadata_v.csv')
@@ -66,8 +73,9 @@ def main(path, vect, nom_utilisateur=''):
     meta_data["vecteur"] = meta_data["vecteur"].apply(lambda x: convert_en_string(x))
     meta_data['distance'] = meta_data['vecteur'].apply(lambda x: calculer_distance(x, vect))
     meta_data = meta_data.sort_values(by=['distance'], ascending=True)
-    afficher_celebrite(meta_data, path, nom_utilisateur)
+    # afficher_celebrite(meta_data, path, nom_utilisateur)
     #return meta_data
+    return celebrity_path_and_name(meta_data)
 
 if __name__ == '__main__':
     print('Entrez votre prénom')

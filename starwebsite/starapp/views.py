@@ -5,6 +5,10 @@ import starapp
 import time
 import os
 
+from keras.models import load_model
+from .backend import main, calculVectUser
+from .models import Model
+
 
 def merge_star(request):
     current_save = saveById(request)
@@ -43,11 +47,18 @@ def find_star(request):
     # appeller fonction lente
     print('findStar called')
     face = Face()
-    # face.face_Img, star_name = findStar()
-    face.face_Img, star_name = 'cat_hokusai_tCakvVH.png', 'Jim Carrey' # supprimer et remplacer par la ligne du dessus
-    time.sleep(5) # supprimer
+
+    image_adapter = calculVectUser.preprocess(abs_path)
+    vect_embedding = Model.predict(image_adapter)[0]
+    print(vect_embedding)
+
+    face.face_Img, star_name = main.main(abs_path, vect_embedding, 'test')
+    # face.face_Img, star_name = 'cat_hokusai_tCakvVH.png', 'Jim Carrey' # supprimer et remplacer par la ligne du dessus
+    # time.sleep(5) # supprimer
+
     face.save()
     print('findStar returned')
+    print(face.face_Img)
 
     current_save.star_face = face
     current_save.star_name = star_name
