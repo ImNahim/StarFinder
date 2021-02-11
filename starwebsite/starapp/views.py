@@ -1,13 +1,25 @@
 from django.shortcuts import render
-from .forms import *
+from .forms import FaceForm
+from .models import *
 import starapp
 
-import time
 import os
+import time
+import base64
+import requests
 
-from keras.models import load_model
-from .backend import main, calculVectUser
-from .models import Model
+from .backend import main
+
+def save_img_from_base64_string(base64_string, path):
+    message_bytes = base64.b64decode(base64_string)
+    with open(path, "wb") as fh:
+        fh.write(message_bytes)
+
+def get_base64_img(path):
+  with open(path, "rb") as image_file:
+    encoded_string = base64.b64encode(image_file.read())
+    return encoded_string
+
 
 
 def merge_star(request):
@@ -16,16 +28,41 @@ def merge_star(request):
         return index(request)
 
     path = os.path.abspath(starapp.__path__[0]).replace('\\starapp','')
-    img_url = current_save.star_face.face_Img.url.replace('/','\\')
-    abs_path = path + img_url
-    print(abs_path)
+    your_face_url = current_save.your_face.face_Img.url.replace('/','\\')
+    star_face_url = current_save.star_face.face_Img.url.replace('/','\\')
 
     print('mergeStar called')
     face = Face()
 
-    # face.face_Img = mergeStar()
-    face.face_Img = 'harrymacrontter.jpg' # supprimer et remplacer par la ligne du dessus
-    time.sleep(5) # supprimer
+    server_url = 'https://26fbaaa206de.ngrok.io'
+
+    data = {
+        'your_face': str(get_base64_img(path + your_face_url)),
+        'star_face': str(get_base64_img(path + star_face_url))
+    }
+
+    response = requests.post(server_url, data=data)
+
+    if (response.status_code != 200):
+        print(response.status_code)
+        return index(request, current_save.id)
+
+    print('images uploaded successfuly !')
+
+    response = 'Not yet'
+    i = 0
+    while (response == 'Not yet'):
+        i += 5
+        time.sleep(5)
+        print('Not yet', i)
+        response = requests.get(server_url).json()['morph']
+
+    morph_rel_path = "morph" + str(current_save.id) + ".png"
+
+    save_img_from_base64_string(response[2:-1], path + "\\media\\" + morph_rel_path)
+    print('morphing image received !')
+
+    face.face_Img = morph_rel_path
 
     face.save()
     print('mergeStar returned')
@@ -48,11 +85,7 @@ def find_star(request):
     print('findStar called')
     face = Face()
 
-    image_adapter = calculVectUser.preprocess(abs_path)
-    vect_embedding = Model.predict(image_adapter)[0]
-    print(vect_embedding)
-
-    face.face_Img, star_name = main.main(abs_path, vect_embedding)
+    face.face_Img, star_name = main.main(abs_path)
     face.save()
     print('findStar returned')
     print(face.face_Img)
