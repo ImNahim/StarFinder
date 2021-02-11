@@ -34,7 +34,7 @@ def merge_star(request):
     print('mergeStar called')
     face = Face()
 
-    server_url = 'https://26fbaaa206de.ngrok.io'
+    server_url = 'https://c9bc4e92cc2b.ngrok.io'
 
     data = {
         'your_face': str(get_base64_img(path + your_face_url)),
@@ -50,10 +50,11 @@ def merge_star(request):
         print('images uploaded successfuly !')
 
         response_morph = 'Not yet'
-        i = 0
+        time.sleep(180)
+        i = 180
         while (response_morph == 'Not yet'):
-            i += 5
-            time.sleep(5)
+            i += 20
+            time.sleep(20)
             print('Not yet', i)
             response = requests.get(server_url)
             if (response.status_code != 200):
@@ -65,7 +66,7 @@ def merge_star(request):
 
         if (response_morph):
             morph_rel_path = "morph" + str(current_save.id) + ".png"
-            save_img_from_base64_string(response[2:-1], path + "\\media\\" + morph_rel_path)
+            save_img_from_base64_string(response_morph[2:-1], path + "\\media\\" + morph_rel_path)
             print('morphing image received !')
             face.face_Img = morph_rel_path
 
