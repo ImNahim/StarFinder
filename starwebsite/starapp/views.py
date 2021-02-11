@@ -44,25 +44,30 @@ def merge_star(request):
     response = requests.post(server_url, data=data)
 
     if (response.status_code != 200):
-        print(response.status_code)
-        return index(request, current_save.id)
+        print('Error !', response.status_code)
+        face.face_Img = 'harrymacrontter.jpg'
+    else:
+        print('images uploaded successfuly !')
 
-    print('images uploaded successfuly !')
+        response_morph = 'Not yet'
+        i = 0
+        while (response_morph == 'Not yet'):
+            i += 5
+            time.sleep(5)
+            print('Not yet', i)
+            response = requests.get(server_url)
+            if (response.status_code != 200):
+                print('Error !', response.status_code)
+                face.face_Img = 'harrymacrontter.jpg'
+                response_morph = None
+            else:
+                response_morph = response.json()['morph']
 
-    response = 'Not yet'
-    i = 0
-    while (response == 'Not yet'):
-        i += 5
-        time.sleep(5)
-        print('Not yet', i)
-        response = requests.get(server_url).json()['morph']
-
-    morph_rel_path = "morph" + str(current_save.id) + ".png"
-
-    save_img_from_base64_string(response[2:-1], path + "\\media\\" + morph_rel_path)
-    print('morphing image received !')
-
-    face.face_Img = morph_rel_path
+        if (response_morph):
+            morph_rel_path = "morph" + str(current_save.id) + ".png"
+            save_img_from_base64_string(response[2:-1], path + "\\media\\" + morph_rel_path)
+            print('morphing image received !')
+            face.face_Img = morph_rel_path
 
     face.save()
     print('mergeStar returned')
