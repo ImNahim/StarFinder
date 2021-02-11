@@ -2,3 +2,7 @@ imdb_data/
 wiki_data/
 resources/
 *.h5
+db.sqlite3
+__pycache__/
+media/
+images_utilisateur/
