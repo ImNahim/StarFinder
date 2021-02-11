@@ -1,12 +1,4 @@
 from django.db import models
-import os
-from django.core.files.storage import FileSystemStorage
-
-from keras.models import load_model
-
-model = load_model(os.path.join(os.getcwd(), 'starapp/backend/resources/model/model','facenet_keras.h5'))
-model.load_weights(os.path.join(os.getcwd(), 'starapp/backend/resources/model/weights','facenet_keras_weights.h5'))
-Model = model
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
