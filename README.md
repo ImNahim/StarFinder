@@ -10,7 +10,7 @@
 
 <h3>Les algorithmes :</h3>
 
-p<>Le fichier loadMetaData : Ce fichier permet de lire le fichier de méta-data qui contient les informations sur la dataset des célébrités, éliminer toutes les images qui n’ont pas un nom correspondant, éliminer toutes les images qui présentes plus qu’un seul visage, éliminer toutes les images avec un face-score < 2 (images flous), puis stocker le fichier sous format CSV. 
+<p>Le fichier loadMetaData : Ce fichier permet de lire le fichier de méta-data qui contient les informations sur la dataset des célébrités, éliminer toutes les images qui n’ont pas un nom correspondant, éliminer toutes les images qui présentes plus qu’un seul visage, éliminer toutes les images avec un face-score < 2 (images flous), puis stocker le fichier sous format CSV. 
 Tout cette partie est réalisée à l’aide de la librairie Pandas, cette dernière permet de manipuler efficacement les fichiers CSV, on pourrait faire des contraintes sur des colonnes pour supprimer toute les entrées qui satisfaisant pas la contrainte etc. </p>
 
 <p>Le fichier calculVectData : Ce fichier permet d’abord de loader notre modèle pré-entrainé FaceNet, parcourir l’ensemble de nos images de célébrités et calculer leur représentation vectorielle, puis stocker le tout sous format CSV.</p>
