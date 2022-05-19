@@ -1,5 +1,7 @@
 # StarFinder
  Final year project : Which celebrity looks like you the most?
+ 
+ Demonstration : https://www.youtube.com/watch?v=CFcyX7vlB3U
 
 <h3 >Dataset: </h3> 
 <p>Nous avons utilisé la dataset du ETH Zürich's Computer Vision Lab https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/ , cette dataset contient 524,230 images des 100,000 célébrités  les plus populaires sur IMDB et wikipedia.</p>
